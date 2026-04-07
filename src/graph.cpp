@@ -33,13 +33,22 @@ Graph load_graph_from_file(const std::string& path) {
     }
 
     std::size_t n, m;
-    file >> n >> m;
+    if (!(file >> n >> m)) {
+        throw std::runtime_error("invalid file format");
+    }
 
     Graph g(n);
 
     std::size_t u, v;
+    std::size_t edge_count = 0;
+
     while (file >> u >> v) {
         g.add_edge(u, v);
+        ++edge_count;
+    }
+
+    if (edge_count != m) {
+        throw std::runtime_error("edge count mismatch");
     }
 
     return g;
