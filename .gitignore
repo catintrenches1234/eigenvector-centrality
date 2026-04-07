@@ -1,5 +1,16 @@
+# build
 build/
-*.o
-*.out
-.venv/
+
+# generated data
+data/input/
+data/output/
+
+# python
 __pycache__/
+*.pyc
+
+# system
+.DS_Store
+
+# virtual environment
+.venv/
