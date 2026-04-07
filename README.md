@@ -2,6 +2,11 @@
 
 Implementation of eigenvector centrality for **undirected, unweighted graphs** using a C++17 codebase and a simple experiment pipeline.
 
+## Introduction to Algorithm Engineering Project
+
+- Ayush Subham Moharana   2024101074
+- Ishaan Shiv Kumar       2024101098
+
 ---
 
 ## Project Structure
