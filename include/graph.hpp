@@ -14,7 +14,7 @@ public:
     std::size_t num_vertices() const noexcept;
     std::size_t num_edges() const noexcept;
 
-    const std::vector<vertex_id>& neighbors(vertex_id u) const;
+    const std::vector<vertex_id>& neighbours(vertex_id u) const noexcept;
 
 private:
     void add_edge(vertex_id u, vertex_id v);
