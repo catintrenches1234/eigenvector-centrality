@@ -21,8 +21,8 @@ from analysis import MoleculeAnalysis, format_result, build_adjacency_matrix
 
 def ensure_output_dirs():
     """Create output directories if they don't exist."""
-    Path("../plots").mkdir(exist_ok=True)
-    Path("../data").mkdir(exist_ok=True)
+    Path("plots").mkdir(exist_ok=True)
+    Path("data").mkdir(exist_ok=True)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -240,7 +240,7 @@ def plot_centrality_profiles(results):
     fig.delaxes(axes[5])
     
     plt.tight_layout()
-    plt.savefig('../plots/01_centrality_profiles.png', dpi=150, bbox_inches='tight')
+    plt.savefig('plots/01_centrality_profiles.png', dpi=150, bbox_inches='tight')
     print("✓ Saved: plots/01_centrality_profiles.png")
 
 
@@ -270,7 +270,7 @@ def plot_topological_indices(results):
     fig.delaxes(axes[7])
     
     plt.tight_layout()
-    plt.savefig('../plots/02_topological_indices.png', dpi=150, bbox_inches='tight')
+    plt.savefig('plots/02_topological_indices.png', dpi=150, bbox_inches='tight')
     print("✓ Saved: plots/02_topological_indices.png")
 
 
@@ -300,7 +300,7 @@ def plot_benchmark_results(bench_data):
     ax.legend(fontsize=10)
     
     plt.tight_layout()
-    plt.savefig('../plots/03_algorithm_benchmark.png', dpi=150, bbox_inches='tight')
+    plt.savefig('plots/03_algorithm_benchmark.png', dpi=150, bbox_inches='tight')
     print("✓ Saved: plots/03_algorithm_benchmark.png")
 
 
@@ -320,7 +320,7 @@ def plot_convergence(convergence_data):
     ax.axhline(y=1e-6, color='r', linestyle='--', alpha=0.5, label='Tolerance (1e-6)')
     
     plt.tight_layout()
-    plt.savefig('../plots/04_convergence_curves.png', dpi=150, bbox_inches='tight')
+    plt.savefig('plots/04_convergence_curves.png', dpi=150, bbox_inches='tight')
     print("✓ Saved: plots/04_convergence_curves.png")
 
 
@@ -369,7 +369,7 @@ def plot_boiling_point_correlation(results):
         ax.grid(True, alpha=0.3)
     
     plt.tight_layout()
-    plt.savefig('../plots/05_boiling_point_correlation.png', dpi=150, bbox_inches='tight')
+    plt.savefig('plots/05_boiling_point_correlation.png', dpi=150, bbox_inches='tight')
     print("✓ Saved: plots/05_boiling_point_correlation.png")
 
 
@@ -406,7 +406,7 @@ def save_results_json(results):
         r_copy['topological_indices'] = {k: float(v) for k, v in r['topological_indices'].items()}
         export_data.append(r_copy)
     
-    with open('../data/analysis_results.json', 'w') as f:
+    with open('data/analysis_results.json', 'w') as f:
         json.dump(export_data, f, indent=2)
     print("✓ Saved: data/analysis_results.json")
 
@@ -415,7 +415,7 @@ def save_benchmark_csv(bench_data):
     """Save benchmark data to CSV."""
     ensure_output_dirs()
     
-    with open('../data/benchmark_results.csv', 'w') as f:
+    with open('data/benchmark_results.csv', 'w') as f:
         f.write("NumNodes,NumEdges,DirectTime_s,PowerIterTime_s,Speedup,L2Difference\n")
         for i in range(len(bench_data['num_nodes'])):
             f.write(f"{bench_data['num_nodes'][i]},")
