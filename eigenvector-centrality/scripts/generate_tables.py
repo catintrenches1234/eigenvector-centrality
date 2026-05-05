@@ -3,7 +3,7 @@ import math
 import csv
 
 INPUT_DIR = "data/output"
-OUTPUT_DIR = "report/tables"
+OUTPUT_DIR = "results/tables"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

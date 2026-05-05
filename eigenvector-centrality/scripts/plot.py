@@ -3,7 +3,7 @@ import math
 import matplotlib.pyplot as plt
 
 INPUT_DIR = "data/output"
-FIG_DIR = "report/figures"
+FIG_DIR = "results/figures"
 
 os.makedirs(FIG_DIR, exist_ok=True)
 
