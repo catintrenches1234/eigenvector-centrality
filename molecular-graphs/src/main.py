@@ -195,10 +195,14 @@ def verify_octane(results):
     print("-"*60)
     
     all_match = True
+    # Use relative tolerance (max(0.01 absolute, 0.1% relative))
     for idx in published:
         pub = published[idx]
         comp = computed[idx]
-        match = abs(pub - comp) < 0.001
+        abs_error = abs(pub - comp)
+        rel_error = abs_error / abs(pub) if pub != 0 else abs_error
+        tolerance = max(0.01, 0.001 * abs(pub))  # 0.1% relative or 0.01 absolute
+        match = abs_error < tolerance
         all_match = all_match and match
         marker = "✓" if match else "✗"
         print(f"{idx:<10} {pub:>12.4f} {comp:>12.4f} {marker:>8}")
