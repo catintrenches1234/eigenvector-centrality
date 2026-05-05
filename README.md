@@ -31,7 +31,7 @@ Implementation of eigenvector centrality for **undirected, unweighted graphs** u
 │   ├── data/                          # C++ experiment data
 │   │   ├── input/                     # Generated graphs
 │   │   └── output/                    # Centrality results
-│   └── report/                        # C++ report output
+│   └── results/                       # C++ result output
 │       ├── figures/                   # Generated plots
 │       └── tables/                    # Generated tables
 ├── molecular-graphs/                  # Python Subproject
