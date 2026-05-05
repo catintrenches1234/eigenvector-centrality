@@ -13,40 +13,39 @@ Implementation of eigenvector centrality for **undirected, unweighted graphs** u
 
 ```
 .
-├── CMakeLists.txt                     # C++ build configuration
-├── include/                           # C++ headers
-│   ├── graph.hpp
-│   └── eigenvector_centrality.hpp
-├── src/                               # C++ source
-│   ├── graph.cpp
-│   ├── eigenvector_centrality.cpp
-│   └── main.cpp
-├── scripts/                           # Utility scripts
-│   ├── generate_graphs.py             # Generate random graphs
-│   ├── run_experiments.sh             # Run C++ experiments
-│   ├── plot.py                        # Plot C++ results
-│   └── pipeline.sh                    # Full pipeline
-├── python/                            # Python subproject
-│   ├── README.md                      # Python implementation details
+├── eigenvector-centrality/            # C++ Subproject
+│   ├── CMakeLists.txt                 # C++ build configuration
+│   ├── include/                       # C++ headers
+│   │   ├── graph.hpp
+│   │   └── eigenvector_centrality.hpp
+│   ├── src/                           # C++ source
+│   │   ├── graph.cpp
+│   │   ├── eigenvector_centrality.cpp
+│   │   └── main.cpp
+│   ├── scripts/                       # Utility scripts
+│   │   ├── generate_graphs.py         # Generate random graphs
+│   │   ├── generate_tables.py         # Generate result tables
+│   │   ├── run_experiments.sh         # Run C++ experiments
+│   │   ├── plot.py                    # Plot C++ results
+│   │   └── pipeline.sh                # Full pipeline
+│   ├── data/                          # C++ experiment data
+│   │   ├── input/                     # Generated graphs
+│   │   └── output/                    # Centrality results
+│   └── report/                        # C++ report output
+│       ├── figures/                   # Generated plots
+│       └── tables/                    # Generated tables
+├── molecular-graphs/                  # Python Subproject
 │   ├── src/                           # Python source
 │   │   ├── main.py                    # Molecular analysis pipeline
 │   │   ├── algorithms.py              # Direct & Power Iteration methods
 │   │   ├── analysis.py                # Topological indices
 │   │   └── molecular_graphs.py        # Alkane molecules (C4-C8)
 │   ├── plots/                         # Generated visualizations
-│   ├── data/                          # Analysis output
-│   │   ├── analysis_results.json      # Molecular analysis
-│   │   └── benchmark_results.csv      # Algorithm benchmarks
-│   ├── report/                        # Python report
-│   │   └── project_report.tex         # LaTeX document
-│   └── requirements.txt               # Python dependencies
-├── report/                            # C++ report
-│   ├── figures/                       # Generated plots
-│   └── report.pdf                     # Compiled PDF
-├── data/                              # C++ experiment data (ignored by git)
-│   ├── input/                         # Generated graphs
-│   └── output/                        # Centrality results
-├── requirements.txt                   # Python dependencies (consolidated)
+│   └── data/                          # Analysis output
+│       ├── analysis_results.json      # Molecular analysis
+│       └── benchmark_results.csv      # Algorithm benchmarks
+├── .gitignore
+├── requirements.txt                   # Python dependencies
 └── README.md                          # This file
 ```
 
@@ -56,7 +55,7 @@ Implementation of eigenvector centrality for **undirected, unweighted graphs** u
 
 ### C++ Implementation (General Purpose)
 
-**Location:** Root directory (`include/`, `src/`, `scripts/`)
+**Location:** `eigenvector-centrality/` subdirectory
 
 - High-performance eigenvector centrality for arbitrary graphs
 - Direct eigenvalue decomposition using Eigen library
@@ -66,6 +65,7 @@ Implementation of eigenvector centrality for **undirected, unweighted graphs** u
 **Build & Run:**
 
 ```bash
+cd eigenvector-centrality
 cmake -S . -B build
 cmake --build build
 ./build/main <input_file> <output_file>
@@ -73,20 +73,17 @@ cmake --build build
 
 ### Python Implementation (Molecular Analysis)
 
-**Location:** `python/` subdirectory
+**Location:** `molecular-graphs/` subdirectory
 
 - Analysis of **11 alkane isomers** (C4 to C8) using spectral graph theory
 - Compares two algorithms: Direct eigendecomposition vs. Power Iteration
 - Computes 7 topological indices from eigenvector centrality
 - Validates against NetworkX and published chemical data
-- Complete LaTeX report and publication-ready visualizations
-
-**See:** [`python/README.md`](python/README.md) for detailed documentation
 
 **Run:**
 
 ```bash
-cd python
+cd molecular-graphs
 python src/main.py
 ```
 
@@ -95,11 +92,12 @@ python src/main.py
 ## Build (C++ only)
 
 ```bash
+cd eigenvector-centrality
 cmake -S . -B build
 cmake --build build
 ```
 
-Binary: `build/main`
+Binary: `eigenvector-centrality/build/main`
 
 ---
 
@@ -108,6 +106,7 @@ Binary: `build/main`
 ### C++ Pipeline (Single Graph)
 
 ```bash
+cd eigenvector-centrality
 ./build/main <input_file> <output_file>
 ```
 
@@ -133,6 +132,7 @@ vertex_id centrality_score
 ```bash
 # One-time setup
 pip install -r requirements.txt
+cd eigenvector-centrality
 chmod +x scripts/*.sh
 
 # Run everything
@@ -142,17 +142,19 @@ chmod +x scripts/*.sh
 Or manually:
 
 ```bash
+cd eigenvector-centrality
 python3 scripts/generate_graphs.py
 cmake -S . -B build
 cmake --build build
 bash scripts/run_experiments.sh
 python3 scripts/plot.py
+python3 scripts/generate_tables.py
 ```
 
 ### Python Pipeline (Molecular Analysis)
 
 ```bash
-cd python
+cd molecular-graphs
 python src/main.py
 ```
 
@@ -160,7 +162,6 @@ Produces:
 - 5 publication-ready plots in `plots/`
 - JSON analysis results in `data/analysis_results.json`
 - CSV benchmark comparison in `data/benchmark_results.csv`
-- LaTeX report in `report/project_report.tex`
 
 ---
 
@@ -178,7 +179,7 @@ Produces:
 - matplotlib ≥ 3.8.0
 - networkx ≥ 3.2
 
-**Install all dependencies:**
+**Install all Python dependencies:**
 
 ```bash
 pip install -r requirements.txt
@@ -190,7 +191,7 @@ pip install -r requirements.txt
 
 ### C++ Results
 - Tested on random sparse graphs (100-2000 vertices, 0.2%-0.5% edge density)
-- Output saved to `report/figures/`
+- Output saved to `eigenvector-centrality/report/figures/` and `eigenvector-centrality/report/tables/`
 
 ### Python Results
 - Eigenvector centrality computed for 11 alkane structures
@@ -201,8 +202,6 @@ pip install -r requirements.txt
 - 7 topological indices computed and validated
 - Boiling point correlation analysis
 
-**See:** `python/README.md` and `python/report/project_report.tex` for complete analysis
-
 ---
 
 ## Reproducibility
@@ -210,7 +209,6 @@ pip install -r requirements.txt
 - C++ graphs generated deterministically (seed = hardcoded)
 - Python analyses use fixed seeds (42) for reproducibility
 - All results logged to output files
-- LaTeX report fully reproducible from source
 
 ---
 
