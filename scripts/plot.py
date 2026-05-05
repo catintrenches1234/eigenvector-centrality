@@ -67,14 +67,6 @@ def average(values):
 
 
 def compute_percentage_relative_error(power, direct):
-    """
-    Percentage Relative Error:
-
-    ||x_power - x_direct||_2
-    ------------------------ × 100
-        ||x_direct||_2
-    """
-
     if len(power) != len(direct):
         return None
 
@@ -95,11 +87,6 @@ def compute_percentage_relative_error(power, direct):
 
 
 def plot_runtime_comparison(results):
-    """
-    Plot 1:
-    Average runtime per graph size
-    """
-
     power_grouped = {}
     direct_grouped = {}
 
@@ -169,11 +156,6 @@ def plot_runtime_comparison(results):
 
 
 def plot_accuracy_comparison(results):
-    """
-    Plot 2:
-    Average Percentage Relative Error
-    """
-
     grouped = {}
 
     for item in results:

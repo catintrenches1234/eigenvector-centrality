@@ -12,15 +12,6 @@ SEED = 7498
 
 
 def save_graph(graph, filepath):
-    """
-    Save graph in format required by C++ loader:
-
-    n m
-    u v
-    u v
-    ...
-    """
-
     n = graph.number_of_nodes()
     m = graph.number_of_edges()
 
