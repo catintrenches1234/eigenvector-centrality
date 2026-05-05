@@ -1,4 +1,5 @@
 import os
+import math
 import matplotlib.pyplot as plt
 
 INPUT_DIR = "data/output"
@@ -59,26 +60,44 @@ def collect_results():
     return results
 
 
-def compute_l1_difference(a, b):
-    if len(a) != len(b):
-        return None
-
-    diff = 0.0
-    for x, y in zip(a, b):
-        diff += abs(x - y)
-
-    return diff
-
-
 def average(values):
     if not values:
         return None
     return sum(values) / len(values)
 
 
+def compute_percentage_relative_error(power, direct):
+    """
+    Percentage Relative Error:
+
+    ||x_power - x_direct||_2
+    ------------------------ × 100
+        ||x_direct||_2
+    """
+
+    if len(power) != len(direct):
+        return None
+
+    numerator = 0.0
+    denominator = 0.0
+
+    for x, y in zip(power, direct):
+        numerator += (x - y) ** 2
+        denominator += y ** 2
+
+    numerator = math.sqrt(numerator)
+    denominator = math.sqrt(denominator)
+
+    if denominator == 0.0:
+        return None
+
+    return (numerator / denominator) * 100.0
+
+
 def plot_runtime_comparison(results):
     """
-    Plot average runtime per graph size
+    Plot 1:
+    Average runtime per graph size
     """
 
     power_grouped = {}
@@ -130,6 +149,8 @@ def plot_runtime_comparison(results):
         label="Direct Eigendecomposition"
     )
 
+    plt.ylim(bottom=0)
+
     plt.xlabel("Number of Vertices")
     plt.ylabel("Average Runtime (ms)")
     plt.title("Runtime Comparison")
@@ -149,7 +170,8 @@ def plot_runtime_comparison(results):
 
 def plot_accuracy_comparison(results):
     """
-    Plot average L1 error per graph size
+    Plot 2:
+    Average Percentage Relative Error
     """
 
     grouped = {}
@@ -174,7 +196,7 @@ def plot_accuracy_comparison(results):
         power_vals = methods["power"]["values"]
         direct_vals = methods["direct"]["values"]
 
-        error = compute_l1_difference(
+        error = compute_percentage_relative_error(
             power_vals,
             direct_vals
         )
@@ -202,8 +224,10 @@ def plot_accuracy_comparison(results):
         marker="o"
     )
 
+    plt.ylim(bottom=0)
+
     plt.xlabel("Number of Vertices")
-    plt.ylabel("Average L1 Difference")
+    plt.ylabel("Average Percentage Error (%)")
     plt.title("Accuracy Comparison (Power vs Direct)")
     plt.tight_layout()
 

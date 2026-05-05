@@ -4,7 +4,7 @@ import networkx as nx
 
 OUTPUT_DIR = "data/input"
 
-GRAPH_SIZES = [100, 200, 400, 600, 800, 1000]
+GRAPH_SIZES = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
 GRAPHS_PER_SIZE = 5
 
 EDGE_PROBABILITY = 0.01

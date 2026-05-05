@@ -35,37 +35,72 @@ std::vector<double> eigenvector_centrality_power_iteration(
             }
         }
 
-        double norm = 0.0;
+        double l2_norm = 0.0;
+
         for (double val : x_new) {
-            norm += val * val;
+            l2_norm += val * val;
         }
 
-        norm = std::sqrt(norm);
+        l2_norm = std::sqrt(l2_norm);
 
-        if (norm == 0.0) {
+        if (l2_norm == 0.0) {
             throw std::runtime_error(
                 "zero norm encountered in power iteration"
             );
         }
 
         for (double& val : x_new) {
-            val /= norm;
+            val /= l2_norm;
         }
 
         double diff = 0.0;
+
         for (std::size_t i = 0; i < n; ++i) {
             diff += std::abs(x_new[i] - x[i]);
         }
 
         if (diff < tolerance) {
+            double l1_norm = 0.0;
+
+            for (double val : x_new) {
+                l1_norm += std::abs(val);
+            }
+
+            if (l1_norm == 0.0) {
+                throw std::runtime_error(
+                    "zero L1 norm in final normalization"
+                );
+            }
+
+            for (double& val : x_new) {
+                val /= l1_norm;
+            }
+
             return x_new;
         }
 
         x = x_new;
     }
 
+    double l1_norm = 0.0;
+
+    for (double val : x) {
+        l1_norm += std::abs(val);
+    }
+
+    if (l1_norm == 0.0) {
+        throw std::runtime_error(
+            "zero L1 norm after max iterations"
+        );
+    }
+
+    for (double& val : x) {
+        val /= l1_norm;
+    }
+
     return x;
 }
+
 
 std::vector<double> eigenvector_centrality_direct(
     const Graph& g
@@ -92,11 +127,6 @@ std::vector<double> eigenvector_centrality_direct(
         );
     }
 
-    /*
-     * For SelfAdjointEigenSolver:
-     * eigenvalues are returned in increasing order.
-     * Last column = dominant eigenvector.
-     */
     Eigen::VectorXd x =
         solver.eigenvectors().col(n - 1);
 
