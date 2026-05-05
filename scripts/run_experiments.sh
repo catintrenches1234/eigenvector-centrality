@@ -6,19 +6,25 @@ BUILD_DIR=build
 INPUT_DIR=data/input
 OUTPUT_DIR=data/output
 
-mkdir -p $OUTPUT_DIR
-
-cmake -S . -B $BUILD_DIR
-cmake --build $BUILD_DIR
+mkdir -p "$OUTPUT_DIR"
 
 EXEC="$BUILD_DIR/main"
 
-for input_file in $INPUT_DIR/*.txt; do
-    filename=$(basename "$input_file")
-    output_file="$OUTPUT_DIR/$filename.out"
+echo "Running Power Iteration and Direct Eigenvalue Decomposition..."
 
-    echo "running $filename"
-    $EXEC "$input_file" "$output_file"
+for input_file in "$INPUT_DIR"/*.txt; do
+    filename=$(basename "$input_file")
+
+    power_output="$OUTPUT_DIR/${filename%.txt}_power.out"
+    direct_output="$OUTPUT_DIR/${filename%.txt}_direct.out"
+
+    echo "Processing: $filename"
+
+    echo "  -> Power Iteration"
+    "$EXEC" "$input_file" "$power_output" power
+
+    echo "  -> Direct Eigenvalue Decomposition"
+    "$EXEC" "$input_file" "$direct_output" direct
 done
 
-echo "done"
+echo "All experiments completed."

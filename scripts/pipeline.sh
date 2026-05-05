@@ -12,7 +12,7 @@ cmake --build build
 echo "[3/4] Running experiments"
 bash scripts/run_experiments.sh
 
-echo "[4/4] Plotting results"
+echo "[4/4] Generating plots"
 python3 scripts/plot.py
 
-echo "Pipeline complete"
+echo "Pipeline complete."
